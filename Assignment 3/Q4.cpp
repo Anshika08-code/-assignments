@@ -13,13 +13,13 @@ string infixToPostfix(string exp) {
     stack<char> s;
     string result = "";
     for (char c : exp) {
-        if (isalnum(c)) result += c; // operand
+        if (isalnum(c)) result += c; 
         else if (c == '(') s.push(c);
         else if (c == ')') {
             while (!s.empty() && s.top() != '(') {
                 result += s.top(); s.pop();
             }
-            s.pop(); // remove '('
+            s.pop(); 
         } else {
             while (!s.empty() && precedence(s.top()) >= precedence(c)) {
                 result += s.top(); s.pop();
