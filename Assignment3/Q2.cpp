@@ -18,5 +18,5 @@ int main() {
     string str = "DataStructure";
     cout << "Original: " << str << endl;
     cout << "Reversed: " << reverseString(str) << endl;
-    return 0;
+    return 0
 }
