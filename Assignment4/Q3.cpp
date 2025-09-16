@@ -1,56 +1,37 @@
 #include <iostream>
-#include <string>
+#include <queue>
 using namespace std;
 
-const int MAX = 1000;
-char st[MAX];
-int topIdx = -1;
+void interleaveQueue(queue<int>& q) {
+    int n = q.size();
+    if (n % 2 != 0) {
+        cout << "Queue size must be even." << endl;
+        return;
+    }
+    queue<int> firstHalf;
+    int half = n / 2;
 
-bool isEmpty() { return topIdx == -1; }
-bool isFull()  { return topIdx == MAX - 1; }
+    for (int i = 0; i < half; ++i) {
+        firstHalf.push(q.front());
+        q.pop();
+    }
 
-void push(char c) {
-    if (!isFull()) st[++topIdx] = c;
-
-}
-
-char popc() {
-    if (isEmpty()) return '\0'; 
-    return st[topIdx--];
-}
-
-char topc() {
-    if (isEmpty()) return '\0';
-    return st[topIdx];
-}
-bool match(char open, char close) {
-    return (open=='(' && close==')') ||
-           (open=='{' && close=='}') ||
-           (open=='[' && close==']');
+    while (!firstHalf.empty()) {
+        cout << firstHalf.front() << " ";
+        firstHalf.pop();
+        cout << q.front() << " ";
+        q.pop();
+    }
+    cout << endl;
 }
 
 int main() {
-    cout << "Enter an expression: ";
-    string s;
-    getline(cin, s);   
+    queue<int> q;
+    int arr[] = {4, 7, 11, 20, 5, 9};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    for (int i = 0; i < n; ++i)
+        q.push(arr[i]);
 
-    for (char c : s) {
-
-        if (c=='(' || c=='{' || c=='[') {
-            push(c);
-        }
-        
-        else if (c==')' || c=='}' || c==']') {
-            char t = popc();
-            if (!match(t, c)) {          
-                cout << "Not Balanced\n";
-                return 0;
-            }
-        }
-
-    }
-    if (isEmpty()) cout << "Balanced\n";
-    else           cout << "Not Balanced\n";
-
+    interleaveQueue(q);
     return 0;
 }
